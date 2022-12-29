@@ -10,5 +10,7 @@ RUN mvn clean install -Dmaven.test.skip=true
 
 FROM  adoptopenjdk/openjdk11:jre-11.0.9_11-alpine
 WORKDIR /opt/demo
-COPY --from=stage1 /opt/demo/target/*.jar /opt/demo.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "/opt/demo.jar"]
+# Original COPY was failing
+COPY --from=stage1 /opt/demo/target/*.jar /opt/
+# You application name is not demo.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "/opt/spring-boot-redis.jar"]
